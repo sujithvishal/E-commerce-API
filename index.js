@@ -2,11 +2,13 @@ import express from "express"
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
 import userRoutes from './routes/userRoutes.js'
+import productRoutes from './routes/productRoutes.js'
 
 dotenv.config();
 const app=express()
 
 app.use(express.json())
+app.use('/uploads',express.static('./uploads'))
 
 mongoose.connect("mongodb://localhost:27017/mydb1", {
   useNewUrlParser: "true",
@@ -20,3 +22,4 @@ mongoose.connection.on("connected", (err, res) => {
 })
 
 app.use('/user',userRoutes)
+app.use('/products',productRoutes)
