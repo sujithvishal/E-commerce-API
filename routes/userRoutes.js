@@ -2,6 +2,7 @@ import express from "express";
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import checkAuth from "../middleware/checkAuth.js"
 const router = express.Router()
 
 router.post('/register',async(req,res)=>{

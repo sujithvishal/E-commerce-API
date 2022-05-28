@@ -2,7 +2,6 @@ import express from "express";
 import Product from "../models/productModel.js"
 import multer from 'multer'
 import path from 'path'
-import { rmdirSync } from "fs";
 
 const router=express.Router()
 const storage= multer.diskStorage({
@@ -72,11 +71,22 @@ const storage= multer.diskStorage({
   })
 
 
-  router.put('/',(req,res)=>{
+  router.put('/:id',(req,res)=>{
+    console.log(req.body)
+
+    Product.findByIdAndUpdate(req.params.id,{$set:req.body})
+    .then(doc=>{
+      res.status(200).json({success:true,message:"product update successfully"})
+    })
+    .catch(err=> res.status(err.status||500).json({error:{message:err.message}}))   
 
   })
 
-  router.delete("/:id")
+  router.delete("/:id",(req,res)=>{
+    Product.findByIdAndDelete(req.params.id).then(doc=>{
+      res.status(200).json({success:true,message:"product update successfully"})     
+    }).catch(err=>res.status(err.status||500).json({error:{message:err.message}}))
+  })
   
 
   
